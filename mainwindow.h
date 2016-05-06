@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "addtaskdialog.h"
+#include "settitledialog.h"
 namespace Ui {
 class TaskList;
 }
@@ -42,13 +43,17 @@ private slots:
     void on_lineEdit18_returnPressed();
     void on_lineEdit19_returnPressed();
 
+    void on_actionSet_WorkFlow_Title_triggered();
+
 public slots:
     void setEdit();
 private:
     Ui::TaskList *ui;
     void createMenus();
     void startupBox();
+    void setTitle();
     addtaskdialog *AddTaskDialog;
+    setTitleDialog *TitleDialog;
     QMenu *fileMenu;
     QAction *exitAct;
     QAction *openAct;

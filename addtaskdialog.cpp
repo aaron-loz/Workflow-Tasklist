@@ -1,8 +1,5 @@
 #include "addtaskdialog.h"
-#include "mainwindow.h"
 #include "ui_addtaskdialog.h"
-#include "ui_addtaskdialog.h"
-#include <QDebug>
 
 addtaskdialog::addtaskdialog(QWidget *parent) :
     QDialog(parent),
@@ -19,10 +16,8 @@ addtaskdialog::~addtaskdialog()
 
 void addtaskdialog::on_addtaskdialog_accepted()
 {
-    qDebug()<<"pressed okay";
     QString str = ui->lineEdit->text();
     setText(str);
-    qDebug()<<str;
     ui->lineEdit->clear();
     ui->lineEdit->setFocus();
     //add a line that puts focus back to lineEdit
@@ -30,7 +25,6 @@ void addtaskdialog::on_addtaskdialog_accepted()
 
 void addtaskdialog::on_addtaskdialog_rejected()
 {
-    qDebug()<<"pressed Cancel";
     foreach(QLineEdit *lineEdit, this->findChildren<QLineEdit*>()) {
         lineEdit->clear();
     }

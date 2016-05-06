@@ -14,12 +14,17 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     mainwindow.cpp \
-    addtaskdialog.cpp
+    addtaskdialog.cpp \
+    settitledialog.cpp
 
 HEADERS  += \
     mainwindow.h \
-    addtaskdialog.h
+    addtaskdialog.h \
+    settitledialog.h
 
 FORMS    += \
-    tasklist.ui \
-    addtaskdialog.ui
+    addtaskdialog.ui \
+    settitledialog.ui \
+    mainwindow.ui
+
+DISTFILES +=

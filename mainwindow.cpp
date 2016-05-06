@@ -1,22 +1,23 @@
 #include "mainwindow.h"
-#include "ui_tasklist.h"
-#include "addtaskdialog.h"
+#include "ui_mainwindow.h"
+
 #include <QMessageBox>
-#include <QDebug>
-#include <QAction>
-#include <string>
+#include <QFileDialog>
+
 TaskList::TaskList(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::TaskList)
 {
     AddTaskDialog = new addtaskdialog;//SWITCH THESE SO IT IS addTaskDialog = new AddTaskDialog. Involves multiple lines changed !
+    TitleDialog = new setTitleDialog;
     ui->setupUi(this);
+    setTitle();
     createMenus();
-    setWindowTitle(tr("Task List!"));
     startupBox();
     foreach(QAbstractButton *checkbtn, this->findChildren<QAbstractButton*>()) {
         checkbtn->setFocusPolicy(Qt::NoFocus);//this makes the tab key skip over checkboxesw
     }
+
 }
 
 TaskList::~TaskList()
@@ -24,6 +25,40 @@ TaskList::~TaskList()
     delete ui;
 }
 
+void TaskList::setTitle()
+{
+    QMessageBox::StandardButton asktitle;
+    asktitle = QMessageBox::question(this, "Set Title?", "would you like to set a title for this workflow?",
+                                     QMessageBox::Yes | QMessageBox::No);
+    switch(asktitle){
+    case QMessageBox::Yes:
+        if(TitleDialog->exec())
+        {//sets title when accepted
+            QString NewTitle= TitleDialog->newTitle;
+            setWindowTitle(NewTitle);
+        }
+        break;
+    default:
+        setWindowTitle(tr("Task List!"));
+        break;
+    }
+}
+
+void TaskList::startupBox()
+{//when the window opens, it will ask this question.
+    QMessageBox::StandardButton startup;
+    startup = QMessageBox::question(this, "Startup?", "Would you like to start adding tasks right away?",
+                                      QMessageBox::Yes | QMessageBox::No);
+    switch(startup){
+    case QMessageBox::Yes:
+        on_actionAddTask_triggered();
+        break;
+    case QMessageBox::No:
+        break;
+    default:
+        break;
+    }
+}
 
 void TaskList::createMenus()
 {    //first menu
@@ -44,22 +79,6 @@ void TaskList::createMenus()
     //!3
 }
 
-void TaskList::startupBox()
-{//when the window opens, it will ask this question.
-    QMessageBox::StandardButton startup;
-    startup = QMessageBox::question(this, "Startup?", "Would you like to start adding tasks right away?",
-                                      QMessageBox::Yes | QMessageBox::No);
-    switch(startup){
-    case QMessageBox::Yes:
-        on_actionAddTask_triggered();
-        break;
-    case QMessageBox::No:
-        break;
-    default:
-        break;
-    }
-}
-
 void TaskList::Exit() {
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Exit", "Quit?",
@@ -67,12 +86,27 @@ void TaskList::Exit() {
     switch(reply)
     {
     case QMessageBox::Yes:
-        qDebug()<<"Yes was Clicked";
         QCoreApplication::exit();
     break;
     default:
-        qDebug()<<"No was Clicked";
     break;
+    }
+}
+
+//Activate once taskWidget.h and taskWidget.cpp created
+void TaskList::Open()
+{
+/*    QString fileName = QFileDialog::getOpenFileName(this);
+    if(!fileName.isEmpty())
+        tasksWidget->readFromFile(fileName);
+*/}
+
+void TaskList::Save()
+{
+    QString fileName = QFileDialog::getSaveFileName(this);
+    if(!fileName.isEmpty())
+    {
+
     }
 }
 
@@ -83,6 +117,23 @@ void TaskList::on_clearButton_clicked()
     }
     foreach(QAbstractButton *checkbtn, this->findChildren<QAbstractButton*>()) {
         checkbtn->setChecked(false);
+    }
+}
+
+void TaskList::on_actionAddTask_triggered()
+{
+    AddTaskDialog->setModal(true);
+    for(int i=0; i<20;i++)
+    {
+        if(AddTaskDialog->exec())
+        {
+//when you press okay, this set edit will go because it is set
+            setEdit();// from the ok button
+        }
+        else
+        {
+           break;
+        }
     }
 }
 
@@ -100,39 +151,12 @@ void TaskList::setEdit()
     }
 }
 
-
-
-//Activate once taskWidget.h and taskWidget.cpp created
-void TaskList::Open()
+void TaskList::on_actionSet_WorkFlow_Title_triggered()
 {
-/*    QString fileName = QFileDialog::getOpenFileName(this);
-    if(!fileName.isEmpty())
-        tasksWidget->readFromFile(fileName);
-*/}
-
-void TaskList::Save()
-{/*
-    QString fileName = QFileDialog::getSaveFileName(this);
-    if(!fileName.isEmpty())
-        taskWidget->writeToFile(fileName);
-*/}
-
-
-
-void TaskList::on_actionAddTask_triggered()
-{
-    AddTaskDialog->setModal(true);
-    for(int i=0; i<20;i++)
+    if(TitleDialog->exec())
     {
-        if(AddTaskDialog->exec())
-        {
-//when you press okay, this set edit will go because it is set
-            setEdit();// from the ok button
-        }
-        else
-        {
-           break;
-        }
+        QString NewTitle= TitleDialog->newTitle;
+        setWindowTitle(NewTitle);
     }
 }
 
