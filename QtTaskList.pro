@@ -20,7 +20,8 @@ SOURCES += main.cpp \
 HEADERS  += \
     mainwindow.h \
     addtaskdialog.h \
-    settitledialog.h
+    settitledialog.h \
+    tasklist.h
 
 FORMS    += \
     addtaskdialog.ui \
@@ -28,3 +29,6 @@ FORMS    += \
     mainwindow.ui
 
 DISTFILES +=
+
+RESOURCES += \
+    resources.qrc

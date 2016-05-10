@@ -3,6 +3,8 @@
 
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QFile>
+#include <QDebug>
 
 TaskList::TaskList(QWidget *parent) :
     QMainWindow(parent),
@@ -17,7 +19,6 @@ TaskList::TaskList(QWidget *parent) :
     foreach(QAbstractButton *checkbtn, this->findChildren<QAbstractButton*>()) {
         checkbtn->setFocusPolicy(Qt::NoFocus);//this makes the tab key skip over checkboxesw
     }
-
 }
 
 TaskList::~TaskList()
@@ -66,7 +67,7 @@ void TaskList::createMenus()
 
     //!0
     openAct = new QAction(tr("O&pen"), this);
-    fileMenu ->addAction(openAct);
+    fileMenu ->addAction(openAct);//connect(Object1, signal1, Object2, signal2);
     connect(openAct, &QAction::triggered, this, &TaskList::Open);
     //!1
     saveAct = new QAction(tr("S&ave..."), this);

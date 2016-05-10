@@ -315,7 +315,14 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit18"/>
+         <widget class="QLineEdit" name="lineEdit18">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -343,12 +350,21 @@
         <height>0</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>12</pointsize>
+        <weight>9</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
       <property name="styleSheet">
        <string notr="true">font: 75 12pt &quot;MS Shell Dlg 2&quot;;
 font: 75 12pt &quot;Arial&quot;;</string>
       </property>
       <property name="text">
-       <string>Clear</string>
+       <string>Clear All</string>
       </property>
      </widget>
     </item>
@@ -362,7 +378,6 @@ font: 75 12pt &quot;Arial&quot;;</string>
     <bool>false</bool>
    </attribute>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
